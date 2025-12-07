@@ -8,6 +8,9 @@ export default function BugdetForm() {
     setBudget(e.target.valueAsNumber);
   }
 
+  const isValid = useMemo(()=> {
+    return isNaN(budget) || budget <= 0
+  },[budget])
  
   return (
     <form className="space-y-5">
@@ -22,12 +25,14 @@ export default function BugdetForm() {
                 placeholder="Define tu presupuesto"
                 name="budget"
                 onChange={ handleChange }
+                
              />
         </div>
         <input
             type="submit"
             value='Definir Presupuesto'
             className="bg-blue-600 hover:bg-blue-700 cursor-pointer w-full p-2 text-white font-black uppercase"
+            disabled={isValid}
         />
     </form>
   )
