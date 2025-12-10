@@ -1,4 +1,4 @@
-import type BudgetTracker from "./components/BudgetTracker";
+import BudgetTracker from "./components/BudgetTracker";
 import BugdetForm from "./components/BugdetForm"
 import { useBudget } from "./hooks/useBudget"
 import { useMemo } from "react";
@@ -6,8 +6,6 @@ import { useMemo } from "react";
 function App() {
 
   const { state } = useBudget(); 
-  console.log(state.budget)
-
   const isValidBudget = useMemo(() => state.budget > 0, [state.budget])
 
   return (
