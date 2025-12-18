@@ -52,8 +52,13 @@ export default function ExpenseForm() {
             setError('Todos los campos son obligatorios')
             return
         }
-        // Agregar un nuevo gasto
-        dispatch({type: 'add-expense', payload: {expense}})
+        // Agregar o actualizar el gasto
+        if(state.editingId){
+          dispatch({type: 'update-expense', payload: {expense: {id: state.editingId, ...expense }}})
+        }else {
+          dispatch({type: 'add-expense', payload: {expense}})
+        }
+        
 
         // Reiniciar el state
         setExpense({
