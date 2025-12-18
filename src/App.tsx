@@ -3,12 +3,17 @@ import BugdetForm from "./components/BugdetForm"
 import ExpenseList from "./components/ExpenseList";
 import ExpenseModal from "./components/ExpenseModal";
 import { useBudget } from "./hooks/useBudget"
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
 
 function App() {
 
   const { state } = useBudget(); 
   const isValidBudget = useMemo(() => state.budget > 0, [state.budget])
+
+  useEffect(()=> {
+    localStorage.setItem('budget', state.budget.toString())
+    localStorage.setItem('expenses', JSON.stringify(state.expenses))
+  },[state])
 
   return (
     <>
