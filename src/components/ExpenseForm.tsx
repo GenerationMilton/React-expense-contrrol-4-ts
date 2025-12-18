@@ -11,6 +11,7 @@ import { useBudget } from "../hooks/useBudget";
 
 export default function ExpenseForm() {
 
+
     const [expense, setExpense] = useState<DraftExpense>({
         amount: 0,
         expenseName: '',
@@ -19,12 +20,14 @@ export default function ExpenseForm() {
     })
 
     const [error, setError] = useState('')
-    const { dispatch, state } = useBudget()
+    const [previousAmount, setPreviousAmount ] = useState(0)
+    const { dispatch, state, remainingBudget } = useBudget()
 
     useEffect(()=> {
       if(state.editingId){
         const editingExpense = state.expenses.filter( currentExpense => currentExpense.id === state.editingId)[0]
         setExpense(editingExpense)
+        setPreviousAmount(editingExpense.amount)
       }
     }, [state.editingId])
 
@@ -52,6 +55,13 @@ export default function ExpenseForm() {
             setError('Todos los campos son obligatorios')
             return
         }
+
+        //Validar que no me pase del limite
+          if((expense.amount - previousAmount) > remainingBudget){
+            setError('Ese gasto se sale del presupuesto')
+            return
+        }
+
         // Agregar o actualizar el gasto
         if(state.editingId){
           dispatch({type: 'update-expense', payload: {expense: {id: state.editingId, ...expense }}})
@@ -67,6 +77,7 @@ export default function ExpenseForm() {
           category: '',
           date: new Date()
         })
+        setPreviousAmount(0)
     }
 
   return (
