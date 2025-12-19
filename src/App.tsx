@@ -2,6 +2,7 @@ import BudgetTracker from "./components/BudgetTracker";
 import BugdetForm from "./components/BugdetForm"
 import ExpenseList from "./components/ExpenseList";
 import ExpenseModal from "./components/ExpenseModal";
+import FilterByCategory from "./components/FilterByCategory";
 import { useBudget } from "./hooks/useBudget"
 import { useMemo, useEffect } from "react";
 
@@ -31,9 +32,9 @@ function App() {
       
       {isValidBudget&& (
         <main className="max-w-3xl mx-auto py-10">
-           <ExpenseList/>
-
-           <ExpenseModal/>
+          <FilterByCategory/>
+          <ExpenseList/>
+          <ExpenseModal/>
         </main>
        
       )}
